@@ -29,7 +29,7 @@
                                             <constraint firstAttribute="width" constant="70" id="HgU-Ez-EnO"/>
                                             <constraint firstAttribute="height" constant="70" id="zSt-L5-tBu"/>
                                         </constraints>
-                                        <state key="normal" image="Selected" backgroundImage="Layout 1"/>
+                                        <state key="normal" backgroundImage="Layout 1"/>
                                         <connections>
                                             <action selector="didTapNewGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bm5-OI-ljx"/>
                                         </connections>
@@ -40,7 +40,7 @@
                                             <constraint firstAttribute="height" constant="70" id="TNi-Su-4Af"/>
                                             <constraint firstAttribute="width" constant="70" id="diX-nP-Gwo"/>
                                         </constraints>
-                                        <state key="normal" image="Selected" backgroundImage="Layout 2"/>
+                                        <state key="normal" backgroundImage="Layout 2"/>
                                         <connections>
                                             <action selector="didTapNewGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6eZ-Cv-1wa"/>
                                         </connections>
@@ -51,7 +51,7 @@
                                             <constraint firstAttribute="width" constant="70" id="9am-hl-bEF"/>
                                             <constraint firstAttribute="height" constant="70" id="fqb-q5-0Z0"/>
                                         </constraints>
-                                        <state key="normal" image="Selected" backgroundImage="Layout 3"/>
+                                        <state key="normal" backgroundImage="Layout 3"/>
                                         <connections>
                                             <action selector="didTapNewGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V87-Bt-Urz"/>
                                         </connections>
@@ -84,6 +84,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="102" height="102"/>
                                                         <color key="backgroundColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" image="Plus"/>
+                                                        <connections>
+                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Wp-r3-hjG"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-pz-iDP">
                                                         <rect key="frame" x="114" y="0.0" width="102" height="102"/>
@@ -95,6 +98,9 @@
                                                         <state key="normal" image="Plus">
                                                             <color key="titleShadowColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JxP-Wl-I6B"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -111,6 +117,9 @@
                                                         <state key="normal" image="Plus">
                                                             <color key="titleShadowColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7zi-yh-Hms"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQK-2k-ykD">
                                                         <rect key="frame" x="114" y="0.0" width="102" height="102"/>
@@ -122,6 +131,9 @@
                                                         <state key="normal" image="Plus">
                                                             <color key="titleShadowColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3K4-dU-MaR"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -169,6 +181,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.73635226490000005" green="0.83968442679999999" blue="0.88922983410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ztF-3b-1Uu" secondAttribute="bottom" constant="20" id="0R7-w8-EBg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="3JF-BU-tNR" secondAttribute="bottom" constant="20" id="15R-4s-nu5"/>
                             <constraint firstItem="LfA-3h-0Qc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="1yN-RT-xDl"/>
                             <constraint firstItem="3JF-BU-tNR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="39C-xd-S2n"/>
                             <constraint firstItem="3JF-BU-tNR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7lB-mf-HWG"/>
@@ -177,6 +191,7 @@
                             <constraint firstItem="LfA-3h-0Qc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GFD-7s-iDu"/>
                             <constraint firstItem="LfA-3h-0Qc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="NvG-LO-lfc"/>
                             <constraint firstItem="ztF-3b-1Uu" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="SXb-rq-6XW"/>
+                            <constraint firstItem="LfA-3h-0Qc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="VTO-MP-vOX"/>
                             <constraint firstItem="ztF-3b-1Uu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bhm-li-4IT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3JF-BU-tNR" secondAttribute="trailing" constant="25" id="bm5-iq-uEj"/>
                             <constraint firstItem="jju-23-rwZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="4" id="hRx-cb-F3G"/>
@@ -189,9 +204,12 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0R7-w8-EBg"/>
+                                <exclude reference="15R-4s-nu5"/>
                                 <exclude reference="bm5-iq-uEj"/>
                                 <exclude reference="1yN-RT-xDl"/>
                                 <exclude reference="NvG-LO-lfc"/>
+                                <exclude reference="VTO-MP-vOX"/>
                                 <exclude reference="iJy-cL-bt9"/>
                                 <exclude reference="hRx-cb-F3G"/>
                                 <exclude reference="mYm-kg-CeI"/>
@@ -203,21 +221,27 @@
                                 <include reference="jju-23-rwZ"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="0R7-w8-EBg"/>
+                                <include reference="15R-4s-nu5"/>
                                 <include reference="bm5-iq-uEj"/>
                                 <exclude reference="ld0-ni-jFR"/>
-                                <include reference="1yN-RT-xDl"/>
+                                <exclude reference="1yN-RT-xDl"/>
                                 <exclude reference="GFD-7s-iDu"/>
                                 <include reference="NvG-LO-lfc"/>
-                                <include reference="iJy-cL-bt9"/>
+                                <include reference="VTO-MP-vOX"/>
+                                <exclude reference="iJy-cL-bt9"/>
+                                <exclude reference="SXb-rq-6XW"/>
                                 <exclude reference="hTd-sG-s2q"/>
+                                <exclude reference="j56-d2-pOQ"/>
                                 <include reference="hRx-cb-F3G"/>
                                 <include reference="mYm-kg-CeI"/>
-                                <include reference="39C-xd-S2n"/>
+                                <exclude reference="39C-xd-S2n"/>
                                 <exclude reference="7lB-mf-HWG"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="gridView" destination="ztF-3b-1Uu" id="f8x-Cj-7K9"/>
                         <outlet property="rectSquareSquareButton" destination="gt1-3U-i7Q" id="BAX-sB-U2v"/>
                         <outlet property="squareSquareRectButton" destination="keY-qg-BRQ" id="GZS-bA-krr"/>
                         <outlet property="squaresOnlyButton" destination="Ofu-WP-HZc" id="RxS-RC-fHA"/>
@@ -234,6 +258,5 @@
         <image name="Layout 2" width="27" height="27"/>
         <image name="Layout 3" width="27" height="27"/>
         <image name="Plus" width="27" height="27"/>
-        <image name="Selected" width="80" height="80"/>
     </resources>
 </document>

@@ -11,20 +11,18 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
-        // gridView.refresh()
+        // resetting images
+        gridView.refresh()
         
-        let chooseGridType = UITapGestureRecognizer(target: self, action: #selector (didTapNewGrid(_:)))
-        gridView.addGestureRecognizer(chooseGridType)
+        // at the launch of the application the starting grid is of the style .squaresOnly
+        didTapNewGrid(squaresOnlyButton)
+        
     }
-/*
-    // ContainerView buttons
-    @IBOutlet weak var topLeftButton: UIButton!
-    @IBOutlet weak var topRightButton: UIButton!
-    @IBOutlet weak var bottomLeftButton: UIButton!
-    @IBOutlet weak var bottomRightButton: UIButton!
-    */
+    
+    
+    @IBOutlet weak var gridView: GridView!
+    
     // StackView buttons
     @IBOutlet weak var rectSquareSquareButton: UIButton!
     @IBOutlet weak var squareSquareRectButton: UIButton!
@@ -32,31 +30,77 @@ class ViewController: UIViewController {
     
     // to share
     
-    // instance of GridView()
-    var gridView = GridView()
     
-    @IBAction func didTapNewGrid(_ sender: UIButton) {
+    // func to choose the type of the grid
+    @IBAction func didTapNewGrid(_ sender: UIButton!) {
+        startNewGrid(sender)
+    }
+    
+    private func startNewGrid(_ sender: UIButton!) {
+        
+        gridView.refresh()
+        
         switch sender {
         case rectSquareSquareButton:
             gridView.gridType = .rectSquareSquare
+            rectSquareSquareButton.setImage(UIImage(named: "Selected"), for: [])
+            squareSquareRectButton.setImage(UIImage(named: ""), for: [])
+            squaresOnlyButton.setImage(UIImage(named: ""), for: [])
             
         case squareSquareRectButton:
             gridView.gridType = .squareSquareRect
+            rectSquareSquareButton.setImage(UIImage(named: ""), for: [])
+            squareSquareRectButton.setImage(UIImage(named: "Selected"), for: [])
+            squaresOnlyButton.setImage(UIImage(named: ""), for: [])
+            
         case squaresOnlyButton:
             gridView.gridType = .squaresOnly
+            rectSquareSquareButton.setImage(UIImage(named: ""), for: [])
+            squareSquareRectButton.setImage(UIImage(named: ""), for: [])
+            squaresOnlyButton.setImage(UIImage(named: "Selected"), for: [])
+            
         default:
             gridView.gridType = .squaresOnly
+            rectSquareSquareButton.setImage(UIImage(named: ""), for: [])
+            squareSquareRectButton.setImage(UIImage(named: ""), for: [])
+            squaresOnlyButton.setImage(UIImage(named: "Selected"), for: [])
         }
     }
     
+    
+    //func to choose an image when a button is pressed
+    @IBAction func didTapChooseImage(_ sender: UIButton!) {
+        chooseImage(sender)
+    }
+    
+    private func chooseImage(_ sender: UIButton!) {
+        
+    }
+    
+    
+    
+    
+    
+    
     /*
-    private func refresh() {
-        // pour chaque bouton, image = "+"
-     gridView.gridType = .squaresOnly
+    extension ViewController: UIImagePickerControllerDelegate {
+        
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            // TODO : extract image and display
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            // TODO : do something
+        }
+    }
+    
+    func photoLibrary() {
+        if UIImagePickerController.isSourceTypeAvailable (.photoLibrary) {
+        var myPickerController = UIImagePickerController()
+        myPickerController.delegate = self;
+        myPickerController.sourceType = .photoLibrary
+        //currentVC.present (myPickerController, animé: true, complétion: nil)
+        }
     }*/
-    
-    //TODO : faire un isHidden pour le selected des boutons de la stack de choix de grid
-    
-    // TODO startNewGrid 1 on efface les images, 2 on affiche la bonne grid 3 on met le selected au bon endroit
 }
 

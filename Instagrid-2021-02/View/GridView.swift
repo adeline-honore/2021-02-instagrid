@@ -8,14 +8,7 @@
 import UIKit
 
 class GridView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+    
     
     enum GridType {
         case rectSquareSquare
@@ -31,11 +24,14 @@ class GridView: UIView {
    
    
     
+    //TODO pour chacun des boutons quand je clique sur le bouton je peux choisir mon image
     
-    /*
+    
     var picture = "" {
-        didSet
-    }*/
+        didSet {
+            //topRightButton.setImage(#imageLiteral(resourceName: "Plus"), for: UIControl.State)
+        }
+    }
     
     
     var gridType: GridType = .squaresOnly {
@@ -48,12 +44,19 @@ class GridView: UIView {
         switch gridType {
         case .rectSquareSquare:
             topRightButton.isHidden = true
+            bottomRightButton.isHidden = false
         case .squareSquareRect:
+            topRightButton.isHidden = false
             bottomRightButton.isHidden = true
         case .squaresOnly:
             topRightButton.isHidden = false
             bottomRightButton.isHidden = false
         }
+    }
+    
+    func refresh() {
+        // pour chaque bouton, image = "+"
+        //TODO effacer toutes les images précedemment insérées , image = "+"
     }
 
 }
