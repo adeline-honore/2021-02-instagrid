@@ -31,7 +31,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="Layout 1"/>
                                         <connections>
-                                            <action selector="didTapNewGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bm5-OI-ljx"/>
+                                            <action selector="didSelectTypeOfGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bm5-OI-ljx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="keY-qg-BRQ">
@@ -42,7 +42,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="Layout 2"/>
                                         <connections>
-                                            <action selector="didTapNewGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6eZ-Cv-1wa"/>
+                                            <action selector="didSelectTypeOfGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6eZ-Cv-1wa"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ofu-WP-HZc">
@@ -53,7 +53,7 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="Layout 3"/>
                                         <connections>
-                                            <action selector="didTapNewGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V87-Bt-Urz"/>
+                                            <action selector="didSelectTypeOfGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V87-Bt-Urz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -80,12 +80,13 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HVc-Lh-yq8">
                                                 <rect key="frame" x="0.0" y="0.0" width="216" height="102"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQo-jR-ADh">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQo-jR-ADh" userLabel="Top Left Button">
                                                         <rect key="frame" x="0.0" y="0.0" width="102" height="102"/>
                                                         <color key="backgroundColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" image="Plus"/>
                                                         <connections>
                                                             <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Wp-r3-hjG"/>
+                                                            <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="fpP-HM-104"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blh-pz-iDP">
@@ -100,6 +101,7 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JxP-Wl-I6B"/>
+                                                            <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="uDV-Ox-mro"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -119,6 +121,7 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7zi-yh-Hms"/>
+                                                            <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="HeO-yM-iMi"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQK-2k-ykD">
@@ -132,6 +135,7 @@
                                                             <color key="titleShadowColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
+                                                            <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="1ry-ig-zN9"/>
                                                             <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3K4-dU-MaR"/>
                                                         </connections>
                                                     </button>
@@ -207,12 +211,12 @@
                                 <exclude reference="0R7-w8-EBg"/>
                                 <exclude reference="15R-4s-nu5"/>
                                 <exclude reference="bm5-iq-uEj"/>
+                                <exclude reference="hRx-cb-F3G"/>
+                                <exclude reference="mYm-kg-CeI"/>
                                 <exclude reference="1yN-RT-xDl"/>
                                 <exclude reference="NvG-LO-lfc"/>
                                 <exclude reference="VTO-MP-vOX"/>
                                 <exclude reference="iJy-cL-bt9"/>
-                                <exclude reference="hRx-cb-F3G"/>
-                                <exclude reference="mYm-kg-CeI"/>
                                 <exclude reference="39C-xd-S2n"/>
                             </mask>
                         </variation>
@@ -225,6 +229,8 @@
                                 <include reference="15R-4s-nu5"/>
                                 <include reference="bm5-iq-uEj"/>
                                 <exclude reference="ld0-ni-jFR"/>
+                                <include reference="hRx-cb-F3G"/>
+                                <include reference="mYm-kg-CeI"/>
                                 <exclude reference="1yN-RT-xDl"/>
                                 <exclude reference="GFD-7s-iDu"/>
                                 <include reference="NvG-LO-lfc"/>
@@ -233,8 +239,6 @@
                                 <exclude reference="SXb-rq-6XW"/>
                                 <exclude reference="hTd-sG-s2q"/>
                                 <exclude reference="j56-d2-pOQ"/>
-                                <include reference="hRx-cb-F3G"/>
-                                <include reference="mYm-kg-CeI"/>
                                 <exclude reference="39C-xd-S2n"/>
                                 <exclude reference="7lB-mf-HWG"/>
                             </mask>

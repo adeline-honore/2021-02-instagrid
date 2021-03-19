@@ -7,7 +7,11 @@
 
 import UIKit
 
-class GridView: UIView {
+protocol GridViewDelegate {
+    func didSelectButton(_ sender: UIButton!)
+}
+
+class GridView: UIView, GridViewDelegate {
     
     
     enum GridType {
@@ -17,21 +21,13 @@ class GridView: UIView {
     }
     
     
+    
     @IBOutlet private var topLeftButton: UIButton!
     @IBOutlet private var topRightButton: UIButton!
     @IBOutlet private var bottomLeftButton: UIButton!
     @IBOutlet private var bottomRightButton: UIButton!
    
-   
-    
-    //TODO pour chacun des boutons quand je clique sur le bouton je peux choisir mon image
-    
-    
-    var picture = "" {
-        didSet {
-            //topRightButton.setImage(#imageLiteral(resourceName: "Plus"), for: UIControl.State)
-        }
-    }
+    var delegate: GridViewDelegate?
     
     
     var gridType: GridType = .squaresOnly {
@@ -39,6 +35,9 @@ class GridView: UIView {
             setGridType(gridType)
         }
     }
+    
+    
+    
     
     private func setGridType(_ gridType: GridType) {
         switch gridType {
@@ -57,6 +56,37 @@ class GridView: UIView {
     func refresh() {
         // pour chaque bouton, image = "+"
         //TODO effacer toutes les images précedemment insérées , image = "+"
+        
     }
-
+    
+    func setTheImage(image: UIImage) {
+        
+        if topLeftButton.isSelected {
+            topLeftButton.setImage(image, for: .normal)
+        }
+        else if topRightButton.isSelected {
+            topRightButton.setImage(image, for: .normal)
+        }
+        else if bottomLeftButton.isSelected {
+            bottomLeftButton.setImage(image, for: .normal)
+        }
+        else if bottomRightButton.isSelected {
+            bottomRightButton.setImage(image, for: .normal)
+        }
+        
+        //topLeftButton.setImage(image, for: .normal)
+    }
+    
+    //func to choose an image when a button is pressed
+    @IBAction func didTapChooseImage(_ sender: UIButton!) {
+        print("*************  ------  azertyuiop")
+        delegate?.didSelectButton(sender)
+    }
+    
+    // response to protocol requirements
+    func didSelectButton(_ sender: UIButton!) {
+        
+        print("*_*_*_*_*_*_*_*__*_*_*_*_**   ok protocol")
+      
+    }
 }

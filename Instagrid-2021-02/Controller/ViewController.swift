@@ -8,19 +8,10 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    //var isPortrait: Bool
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        // resetting images
-        gridView.refresh()
-        
-        // at the launch of the application the starting grid is of the style .squaresOnly
-        didTapNewGrid(squaresOnlyButton)
-        
-    }
-    
-    
     @IBOutlet weak var gridView: GridView!
     
     // StackView buttons
@@ -28,79 +19,113 @@ class ViewController: UIViewController {
     @IBOutlet weak var squareSquareRectButton: UIButton!
     @IBOutlet weak var squaresOnlyButton: UIButton!
     
+    // current button in StackView to choose a grid
+    var currentButton: UIButton!
+    
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // resetting images
+        gridView.refresh()
+        
+        // at the launch of the application the starting grid is of the style .squaresOnly
+        currentButton = squaresOnlyButton
+        selectedGrid(currentButton: currentButton)
+        
+        //
+        gridView.delegate = self
+    }
+    
+    
     // to share
     
     
+    
+    
     // func to choose the type of the grid
-    @IBAction func didTapNewGrid(_ sender: UIButton!) {
-        startNewGrid(sender)
+    @IBAction func didSelectTypeOfGrid(_ sender: UIButton!) {
+        selectTypeOfGrid(sender)
     }
     
-    private func startNewGrid(_ sender: UIButton!) {
-        
-        gridView.refresh()
+    private func selectTypeOfGrid(_ sender: UIButton!) {
         
         switch sender {
         case rectSquareSquareButton:
             gridView.gridType = .rectSquareSquare
-            rectSquareSquareButton.setImage(UIImage(named: "Selected"), for: [])
-            squareSquareRectButton.setImage(UIImage(named: ""), for: [])
-            squaresOnlyButton.setImage(UIImage(named: ""), for: [])
-            
+            selectedGrid(currentButton: rectSquareSquareButton)
         case squareSquareRectButton:
             gridView.gridType = .squareSquareRect
-            rectSquareSquareButton.setImage(UIImage(named: ""), for: [])
-            squareSquareRectButton.setImage(UIImage(named: "Selected"), for: [])
-            squaresOnlyButton.setImage(UIImage(named: ""), for: [])
-            
+            selectedGrid(currentButton: squareSquareRectButton)
         case squaresOnlyButton:
             gridView.gridType = .squaresOnly
-            rectSquareSquareButton.setImage(UIImage(named: ""), for: [])
-            squareSquareRectButton.setImage(UIImage(named: ""), for: [])
-            squaresOnlyButton.setImage(UIImage(named: "Selected"), for: [])
-            
+            selectedGrid(currentButton: squaresOnlyButton)
         default:
             gridView.gridType = .squaresOnly
-            rectSquareSquareButton.setImage(UIImage(named: ""), for: [])
-            squareSquareRectButton.setImage(UIImage(named: ""), for: [])
-            squaresOnlyButton.setImage(UIImage(named: "Selected"), for: [])
+            selectedGrid(currentButton: squaresOnlyButton)
         }
     }
     
-    
-    //func to choose an image when a button is pressed
-    @IBAction func didTapChooseImage(_ sender: UIButton!) {
-        chooseImage(sender)
-    }
-    
-    private func chooseImage(_ sender: UIButton!) {
+    // display of the image "selected" on the buttons
+    private func selectedGrid(currentButton: UIButton) {
+        // reset of states of buttons
+        rectSquareSquareButton.isSelected = false
+        squareSquareRectButton.isSelected = false
+        squaresOnlyButton.isSelected = false
         
+        // state .isSelected for one button
+        currentButton.isSelected = true
+        currentButton.setImage(UIImage(named: "Selected"), for: .selected)
     }
     
+    // to share
     
     
-    
-    
-    
-    /*
-    extension ViewController: UIImagePickerControllerDelegate {
-        
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            // TODO : extract image and display
-        }
-        
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            // TODO : do something
-        }
-    }
-    
-    func photoLibrary() {
-        if UIImagePickerController.isSourceTypeAvailable (.photoLibrary) {
-        var myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = .photoLibrary
-        //currentVC.present (myPickerController, animé: true, complétion: nil)
-        }
-    }*/
 }
+
+
+extension ViewController: GridViewDelegate {
+    func didSelectButton(_ sender: UIButton!) {
+        
+        // Open ImagePicker etc.
+        print("ok on ouvre le PickerController")
+        
+        // creation d'une constante qui instancie UIImagePickerController
+        let imagePickerController = UIImagePickerController()
+        
+        // choix du type de source pour l'image
+        imagePickerController.sourceType = .photoLibrary
+        
+        // ViewController delegate to himself
+        imagePickerController.delegate = self
+        
+        // Present the UIImagePickerViewController
+        present(imagePickerController, animated: true, completion: nil)
+        print("present(imagePickerController ***********ok")
+            
+    }
+    
+}
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        
+        // extract image and display
+        guard let choosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            return
+        }
+        print("l'image est : \(choosenImage)")
+        
+        gridView.setTheImage(image: choosenImage)
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
 
