@@ -11,7 +11,7 @@ protocol GridViewDelegate {
     func didSelectButton(_ sender: UIButton!)
 }
 
-class GridView: UIView, GridViewDelegate {
+class GridView: UIView {
     
     
     enum GridType {
@@ -29,6 +29,7 @@ class GridView: UIView, GridViewDelegate {
    
     var delegate: GridViewDelegate?
     
+    var selectedLocation: UIButton!
     
     var gridType: GridType = .squaresOnly {
         didSet {
@@ -59,34 +60,19 @@ class GridView: UIView, GridViewDelegate {
         
     }
     
-    func setTheImage(image: UIImage) {
+    func setTheImage(location: UIButton?, image: UIImage) {
         
-        if topLeftButton.isSelected {
-            topLeftButton.setImage(image, for: .normal)
-        }
-        else if topRightButton.isSelected {
-            topRightButton.setImage(image, for: .normal)
-        }
-        else if bottomLeftButton.isSelected {
-            bottomLeftButton.setImage(image, for: .normal)
-        }
-        else if bottomRightButton.isSelected {
-            bottomRightButton.setImage(image, for: .normal)
-        }
+        // choice of location
+        selectedLocation = location
         
-        //topLeftButton.setImage(image, for: .normal)
+        // picture change
+        location?.setImage(image, for: .normal)
+ 
     }
     
     //func to choose an image when a button is pressed
     @IBAction func didTapChooseImage(_ sender: UIButton!) {
-        print("*************  ------  azertyuiop")
+        selectedLocation = sender
         delegate?.didSelectButton(sender)
-    }
-    
-    // response to protocol requirements
-    func didSelectButton(_ sender: UIButton!) {
-        
-        print("*_*_*_*_*_*_*_*__*_*_*_*_**   ok protocol")
-      
     }
 }

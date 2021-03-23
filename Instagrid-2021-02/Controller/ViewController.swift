@@ -20,9 +20,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var squaresOnlyButton: UIButton!
     
     // current button in StackView to choose a grid
-    var currentButton: UIButton!
+    var selectedButton: UIButton?
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,16 +31,37 @@ class ViewController: UIViewController {
         gridView.refresh()
         
         // at the launch of the application the starting grid is of the style .squaresOnly
-        currentButton = squaresOnlyButton
-        selectedGrid(currentButton: currentButton)
+        selectedButton = squaresOnlyButton
+        selectedGrid(currentButton: selectedButton)
         
         //
         gridView.delegate = self
+        
+        // constant to share gridView
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dragGridView(_:)))
+        gridView.addGestureRecognizer(panGestureRecognizer)
     }
     
     
     // to share
     
+    
+    
+    @IBAction func dragGridView(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .ended:
+            shareGridView(gesture: sender)
+        //case .cancelled:
+            // on reprend le dernier aspect du collage
+        default:
+            break
+        }
+    }
+    
+    
+    private func shareGridView(gesture: UIPanGestureRecognizer) {
+        
+    }
     
     
     
@@ -54,32 +75,30 @@ class ViewController: UIViewController {
         switch sender {
         case rectSquareSquareButton:
             gridView.gridType = .rectSquareSquare
-            selectedGrid(currentButton: rectSquareSquareButton)
         case squareSquareRectButton:
             gridView.gridType = .squareSquareRect
-            selectedGrid(currentButton: squareSquareRectButton)
         case squaresOnlyButton:
             gridView.gridType = .squaresOnly
-            selectedGrid(currentButton: squaresOnlyButton)
         default:
             gridView.gridType = .squaresOnly
-            selectedGrid(currentButton: squaresOnlyButton)
         }
+        selectedGrid(currentButton: sender)
     }
     
     // display of the image "selected" on the buttons
-    private func selectedGrid(currentButton: UIButton) {
-        // reset of states of buttons
-        rectSquareSquareButton.isSelected = false
-        squareSquareRectButton.isSelected = false
-        squaresOnlyButton.isSelected = false
+    private func selectedGrid(currentButton: UIButton?) {
         
-        // state .isSelected for one button
-        currentButton.isSelected = true
-        currentButton.setImage(UIImage(named: "Selected"), for: .selected)
+        // reset of state of button ***************
+        selectedButton?.isSelected = false
+        
+        // state .isSelected for one button *******************
+        currentButton?.isSelected = true
+        selectedButton = currentButton
     }
     
     // to share
+    
+    
     
     
 }
@@ -89,7 +108,6 @@ extension ViewController: GridViewDelegate {
     func didSelectButton(_ sender: UIButton!) {
         
         // Open ImagePicker etc.
-        print("ok on ouvre le PickerController")
         
         // creation d'une constante qui instancie UIImagePickerController
         let imagePickerController = UIImagePickerController()
@@ -102,7 +120,6 @@ extension ViewController: GridViewDelegate {
         
         // Present the UIImagePickerViewController
         present(imagePickerController, animated: true, completion: nil)
-        print("present(imagePickerController ***********ok")
             
     }
     
@@ -116,9 +133,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         guard let choosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
         }
-        print("l'image est : \(choosenImage)")
         
-        gridView.setTheImage(image: choosenImage)
+        gridView.setTheImage(location: gridView.selectedLocation, image: choosenImage)
         picker.dismiss(animated: true, completion: nil)
     }
     

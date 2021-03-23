@@ -30,6 +30,7 @@
                                             <constraint firstAttribute="height" constant="70" id="zSt-L5-tBu"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="Layout 1"/>
+                                        <state key="selected" image="Selected"/>
                                         <connections>
                                             <action selector="didSelectTypeOfGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bm5-OI-ljx"/>
                                         </connections>
@@ -41,6 +42,7 @@
                                             <constraint firstAttribute="width" constant="70" id="diX-nP-Gwo"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="Layout 2"/>
+                                        <state key="selected" image="Selected"/>
                                         <connections>
                                             <action selector="didSelectTypeOfGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6eZ-Cv-1wa"/>
                                         </connections>
@@ -52,6 +54,7 @@
                                             <constraint firstAttribute="height" constant="70" id="fqb-q5-0Z0"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="Layout 3"/>
+                                        <state key="selected" image="Selected"/>
                                         <connections>
                                             <action selector="didSelectTypeOfGrid:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V87-Bt-Urz"/>
                                         </connections>
@@ -85,7 +88,6 @@
                                                         <color key="backgroundColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <state key="normal" image="Plus"/>
                                                         <connections>
-                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Wp-r3-hjG"/>
                                                             <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="fpP-HM-104"/>
                                                         </connections>
                                                     </button>
@@ -100,7 +102,6 @@
                                                             <color key="titleShadowColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JxP-Wl-I6B"/>
                                                             <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="uDV-Ox-mro"/>
                                                         </connections>
                                                     </button>
@@ -120,7 +121,6 @@
                                                             <color key="titleShadowColor" red="0.94108694790000003" green="0.94124108549999996" blue="0.94105428459999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7zi-yh-Hms"/>
                                                             <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="HeO-yM-iMi"/>
                                                         </connections>
                                                     </button>
@@ -136,7 +136,6 @@
                                                         </state>
                                                         <connections>
                                                             <action selector="didTapChooseImage:" destination="ztF-3b-1Uu" eventType="touchUpInside" id="1ry-ig-zN9"/>
-                                                            <action selector="didTapChooseImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3K4-dU-MaR"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -180,6 +179,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="sve-Lp-jqI" appends="YES" id="Rnv-xp-1Ld"/>
+                                </connections>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -252,6 +255,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="sve-Lp-jqI">
+                    <connections>
+                        <action selector="dragGridView:" destination="BYZ-38-t0r" id="Ib3-j8-t7Y"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-391.875" y="225"/>
         </scene>
@@ -262,5 +270,6 @@
         <image name="Layout 2" width="27" height="27"/>
         <image name="Layout 3" width="27" height="27"/>
         <image name="Plus" width="27" height="27"/>
+        <image name="Selected" width="80" height="80"/>
     </resources>
 </document>
