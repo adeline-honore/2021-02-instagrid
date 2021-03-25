@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    
     //var isPortrait: Bool
 
         
@@ -27,8 +28,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // resetting images
-        gridView.refresh()
+        //gridView.refresh()
         
         // at the launch of the application the starting grid is of the style .squaresOnly
         selectedButton = squaresOnlyButton
@@ -37,31 +39,18 @@ class ViewController: UIViewController {
         //
         gridView.delegate = self
         
-        // constant to share gridView
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dragGridView(_:)))
-        gridView.addGestureRecognizer(panGestureRecognizer)
-    }
-    
-    
-    // to share
-    
-    
-    
-    @IBAction func dragGridView(_ sender: UIPanGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            shareGridView(gesture: sender)
-        //case .cancelled:
-            // on reprend le dernier aspect du collage
-        default:
-            break
-        }
-    }
-    
-    
-    private func shareGridView(gesture: UIPanGestureRecognizer) {
+        // constant to swipe gridView
         
+        //let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dragGridView(_:)))
+        //gridView.addGestureRecognizer(swipeGestureRecognizer)
+        
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareGrid))
+
+       
     }
+    
+    
+    
     
     
     
@@ -83,6 +72,8 @@ class ViewController: UIViewController {
             gridView.gridType = .squaresOnly
         }
         selectedGrid(currentButton: sender)
+        
+        deviceOrientation()
     }
     
     // display of the image "selected" on the buttons
@@ -96,12 +87,107 @@ class ViewController: UIViewController {
         selectedButton = currentButton
     }
     
+    
+    
     // to share
     
+    @IBAction func dragGridView(_ sender: UISwipeGestureRecognizer) {
+        print("on en essaie de déplacer la grid")
+        
+        swipeGridViewWith(gesture: sender)
+        print(sender.direction)
+        print(sender.description)
+        print(sender.location(in: gridView))
+        //print(sender.location(ofTouch: <#T##Int#>, in: gridView))
+        print((sender.state))
+        
+        
+        //sender.state = .changed
+        /*switch sender.state {
+        case .began, .changed:
+            print("ça bouge")
+            swipeGridViewWith(gesture: sender)
+        case .ended:
+            swipeGridViewWith(gesture: sender)
+            print("c'est fini")
+        default:
+        break
+        }*/
+    }
     
     
+    
+    private func swipeGridViewWith(gesture: UISwipeGestureRecognizer) {
+        
+        
+        let translation = gesture.location(in: gridView)
+        
+        //gesture.direction = .up
+        
+        
+        gridView.transform = CGAffineTransform(translationX: translation.x, y: translation.y)
+        
+        print("y: \(translation.y) et x: \(translation.x)")
+        
+        
+        shareGrid()
+        
+        //gridView.center = CGPoint(x: 60, y: 30)
+        
+        //gridView.transform = CGAffineTransform.translatedBy(translation.x)
+        
+       
+    }
+    
+    
+    @objc private func shareGrid() {
+        
+        //
+        //let activityViewController = UIActivityViewController(activityItems: [], applicationActivities: [])
+        
+        //activityViewController.activityItemsConfiguration.
+        
+        //activityViewController.delegate = self
+        
+        //self.present(activityViewController, animated: true)
+        
+        
+        
+        // creation de l'image à partager
+        guard let imageToShare = gridView.asImage().jpegData(compressionQuality: 1) else {
+            print("No image found")
+            return
+        }
+        
+    
+        
+
+        let activityViewController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
+        
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        
+        present(activityViewController, animated: true)
+    }
+        
+    
+    func deviceOrientation() {
+        
+        if UIDevice.current.orientation.isLandscape {
+            print("appareil en mode paysage")
+        } else {
+            print("appareil en mode portrait")
+        }
+    }
     
 }
+
+
+
+
+
+
+
+
 
 
 extension ViewController: GridViewDelegate {
@@ -142,6 +228,3 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         picker.dismiss(animated: true, completion: nil)
     }
 }
-
-
-
