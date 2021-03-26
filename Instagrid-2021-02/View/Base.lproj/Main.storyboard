@@ -251,6 +251,8 @@
                         <outlet property="rectSquareSquareButton" destination="gt1-3U-i7Q" id="BAX-sB-U2v"/>
                         <outlet property="squareSquareRectButton" destination="keY-qg-BRQ" id="GZS-bA-krr"/>
                         <outlet property="squaresOnlyButton" destination="Ofu-WP-HZc" id="RxS-RC-fHA"/>
+                        <outlet property="symboleToSwipe" destination="V8f-In-ep1" id="p6T-K4-jhG"/>
+                        <outlet property="textToSwipe" destination="a9q-QQ-V7r" id="tR9-Ng-OWw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

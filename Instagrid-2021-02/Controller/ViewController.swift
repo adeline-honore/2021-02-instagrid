@@ -10,7 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     
-    //var isPortrait: Bool
+    //  XXXXXXXXXXXXXXXXXXXX  PROPERTIES  XXXXXXXXXXXXXXXXXXXX
 
         
     @IBOutlet weak var gridView: GridView!
@@ -25,12 +25,24 @@ class ViewController: UIViewController {
     
     
     
+    @IBOutlet weak var textToSwipe: UILabel!
+    @IBOutlet weak var symboleToSwipe: UILabel!
+    
+    /*
+    var deviceOrientation: UIDeviceOrientation = .portrait {
+        didSet {
+            knowDeviceOrientation()
+        }
+    }*/
+    
+    //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
+    
+    // -----------  VIEWDIDLOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        // resetting images
-        //gridView.refresh()
+        //knowDeviceOrientation()
+        //landscapeText()
         
         // at the launch of the application the starting grid is of the style .squaresOnly
         selectedButton = squaresOnlyButton
@@ -39,20 +51,24 @@ class ViewController: UIViewController {
         //
         gridView.delegate = self
         
+        
         // constant to swipe gridView
-        
-        //let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(dragGridView(_:)))
-        //gridView.addGestureRecognizer(swipeGestureRecognizer)
-        
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareGrid))
-
-       
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+            swipeUp.direction = .up
+        gridView.addGestureRecognizer(swipeUp)
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+            swipeLeft.direction = .left
+        gridView.addGestureRecognizer(swipeLeft)
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+            swipeRight.direction = .right
+        gridView.addGestureRecognizer(swipeRight)
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+           swipeDown.direction = .down
+        gridView.addGestureRecognizer(swipeDown)
     }
     
     
-    
-    
-    
+    // ----------  METHODS : CHOICE OF A GRID TYPE
     
     // func to choose the type of the grid
     @IBAction func didSelectTypeOfGrid(_ sender: UIButton!) {
@@ -73,7 +89,6 @@ class ViewController: UIViewController {
         }
         selectedGrid(currentButton: sender)
         
-        deviceOrientation()
     }
     
     // display of the image "selected" on the buttons
@@ -89,68 +104,36 @@ class ViewController: UIViewController {
     
     
     
+    // ---------- MEHODS : SHARING THE GRID
     // to share
     
     @IBAction func dragGridView(_ sender: UISwipeGestureRecognizer) {
-        print("on en essaie de déplacer la grid")
         
-        swipeGridViewWith(gesture: sender)
-        print(sender.direction)
-        print(sender.description)
-        print(sender.location(in: gridView))
-        //print(sender.location(ofTouch: <#T##Int#>, in: gridView))
-        print((sender.state))
-        
-        
-        //sender.state = .changed
-        /*switch sender.state {
-        case .began, .changed:
-            print("ça bouge")
-            swipeGridViewWith(gesture: sender)
-        case .ended:
-            swipeGridViewWith(gesture: sender)
-            print("c'est fini")
-        default:
-        break
-        }*/
+        handleGesture(gesture: sender)
+       
     }
     
     
     
     private func swipeGridViewWith(gesture: UISwipeGestureRecognizer) {
         
-        
         let translation = gesture.location(in: gridView)
         
-        //gesture.direction = .up
-        
-        
-        gridView.transform = CGAffineTransform(translationX: translation.x, y: translation.y)
-        
-        print("y: \(translation.y) et x: \(translation.x)")
-        
-        
-        shareGrid()
-        
-        //gridView.center = CGPoint(x: 60, y: 30)
-        
-        //gridView.transform = CGAffineTransform.translatedBy(translation.x)
-        
-       
+        if UIDevice.current.orientation.isPortrait == true {
+            gridView.transform = CGAffineTransform(translationX: 0, y: -translation.y)
+        }
+        else {
+            gridView.transform = CGAffineTransform(translationX: -translation.x, y: 0)
+        }
+        print("x transformé: \(gridView.transform.c)  y transformé:  \(gridView.transform.d)")
     }
     
     
-    @objc private func shareGrid() {
+    
+    private func shareGrid() {
         
-        //
-        //let activityViewController = UIActivityViewController(activityItems: [], applicationActivities: [])
-        
-        //activityViewController.activityItemsConfiguration.
-        
-        //activityViewController.delegate = self
-        
-        //self.present(activityViewController, animated: true)
-        
+        // we put the grid back in the center
+        gridGoBackToCenter()
         
         
         // creation de l'image à partager
@@ -159,7 +142,6 @@ class ViewController: UIViewController {
             return
         }
         
-    
         
 
         let activityViewController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
@@ -168,16 +150,65 @@ class ViewController: UIViewController {
         
         present(activityViewController, animated: true)
     }
-        
     
-    func deviceOrientation() {
+    private func gridGoBackToCenter() {
         
-        if UIDevice.current.orientation.isLandscape {
-            print("appareil en mode paysage")
-        } else {
-            print("appareil en mode portrait")
-        }
+        let screenSize = UIScreen.main.bounds
+        let screenWidth = screenSize.width
+        let screenHeight = screenSize.height
+        
+        gridView.center = CGPoint(x: screenWidth/2, y: screenHeight/2)
+        
+        /*
+         var périmètre: Int {
+             get {
+                 return longueur * 4
+             }
+             set {
+                 longueur = newValue / 4
+             }
+         }
+         
+         */
     }
+    
+    
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) {
+        
+        //print("************    \(deviceOrientation) *******************")
+        if (gesture.direction == .up && UIDevice.current.orientation.isPortrait == true) || (gesture.direction == .left && UIDevice.current.orientation.isLandscape == true){
+            print(UIDevice.current.orientation.rawValue)
+            print("Swipe up and current orientation.isPortrait")
+            swipeGridViewWith(gesture: gesture)
+            shareGrid()
+        }
+        else {
+            print("pas le bon sens pour l'orientation du device")
+       }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    private func knowDeviceOrientation() {
+        print("device en mode portrait ?  \(UIDevice.current.orientation.isPortrait)")
+    }*/
+    
+    
+    
+    /*
+    private func landscapeText() {
+        if UIDevice.current.orientation.isLandscape == true {
+            textToSwipe.text = "*********"
+            symboleToSwipe.text = "$$$$$$$$$"
+        }
+    }*/
     
 }
 
@@ -186,7 +217,7 @@ class ViewController: UIViewController {
 
 
 
-
+//  X-X-X-X-X-X-X-X-X-X  EXTENSIONS  X-X-X-X-X-X-X-X-X-X
 
 
 

@@ -20,7 +20,7 @@ class GridView: UIView {
         case squaresOnly
     }
     
-    
+    //  XXXXXXXXXXXXXXXXXXXX  PROPERTIES  XXXXXXXXXXXXXXXXXXXX
     
     @IBOutlet private var topLeftButton: UIButton!
     @IBOutlet private var topRightButton: UIButton!
@@ -38,6 +38,7 @@ class GridView: UIView {
     }
     
     
+    //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
     
     
     private func setGridType(_ gridType: GridType) {
@@ -54,11 +55,6 @@ class GridView: UIView {
         }
     }
     
-    func refresh() {
-        // pour chaque bouton, image = "+"
-        //TODO effacer toutes les images précedemment insérées , image = "+"
-        
-    }
     
     func setTheImage(location: UIButton?, image: UIImage) {
         
@@ -76,6 +72,10 @@ class GridView: UIView {
         delegate?.didSelectButton(sender)
     }
 }
+
+
+
+//  X-X-X-X-X-X-X-X-X-X  EXTENSIONS  X-X-X-X-X-X-X-X-X-X
 
 
 extension GridView {
