@@ -13,7 +13,7 @@ protocol GridViewDelegate {
 
 class GridView: UIView {
     
-    
+    // enumeration for types of grid
     enum GridType {
         case rectSquareSquare
         case squareSquareRect
@@ -40,7 +40,7 @@ class GridView: UIView {
     
     //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
     
-    
+    // to custom gridView
     private func setGridType(_ gridType: GridType) {
         switch gridType {
         case .rectSquareSquare:
@@ -55,18 +55,16 @@ class GridView: UIView {
         }
     }
     
-    
+    // to select location for choosenImage
     func setTheImage(location: UIButton?, image: UIImage) {
-        
         // choice of location
         selectedLocation = location
         
         // picture change
         location?.setImage(image, for: .normal)
- 
     }
     
-    //func to choose an image when a button is pressed
+    // to choose an image when a button is pressed
     @IBAction func didTapChooseImage(_ sender: UIButton!) {
         selectedLocation = sender
         delegate?.didSelectButton(sender)
@@ -74,16 +72,15 @@ class GridView: UIView {
 }
 
 
-
 //  X-X-X-X-X-X-X-X-X-X  EXTENSIONS  X-X-X-X-X-X-X-X-X-X
 
-
+// to create an image from gridView
 extension GridView {
     
     func asImage() -> UIImage {
-            let renderer = UIGraphicsImageRenderer(bounds: bounds)
-            return renderer.image { rendererContext in
-                layer.render(in: rendererContext.cgContext)
-            }
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
         }
+    }
 }
