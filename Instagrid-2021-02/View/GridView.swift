@@ -38,6 +38,29 @@ class GridView: UIView {
     }
     
     
+    private var gridArray: [UIButton]!
+    
+    var isGridComplete: Bool {
+        
+        switch gridType {
+        case .squaresOnly:
+            gridArray = [topLeftButton, topRightButton, bottomLeftButton, bottomRightButton]
+        case .rectSquareSquare:
+            gridArray = [topLeftButton, bottomLeftButton, bottomRightButton]
+        case .squareSquareRect:
+            gridArray = [topLeftButton, topRightButton, bottomLeftButton]
+        }
+        
+        var result = true
+        gridArray.forEach { buttonInGrid in
+            if buttonInGrid.currentImage.debugDescription.contains("Plus") {
+                result = false
+            }
+        }
+        return result
+    }
+    
+    
     //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
     
     // to custom gridView

@@ -52,12 +52,18 @@ class ViewController: UIViewController {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(shareGridView(_:)))
             swipeLeft.direction = .left
         gridView.addGestureRecognizer(swipeLeft)
-        
-        if phoneOrientation.isLandscape {
-            textToSwipe.text = "zertyuikljhgf"
-        }
     }
     
+    // -----------  override VIEWWILLLAYOUTSUBVIEWS
+    override func viewWillLayoutSubviews() {
+        
+        if phoneOrientation.isPortrait {
+            textToSwipe.text = "Swipe up to share"
+        }
+        else if phoneOrientation.isLandscape {
+            textToSwipe.text = "Swipe left to share"
+        }
+    }
     
     // ----------  METHODS : CHOICE OF A GRID TYPE
     
@@ -94,24 +100,27 @@ class ViewController: UIViewController {
     }
     
     
-    
     // ---------- MEHODS : SHARING THE GRID
     
     // to share gridView
     @IBAction func shareGridView(_ sender: UISwipeGestureRecognizer) {
         
-        print(phoneOrientation)
-        if phoneOrientation.isPortrait {
-            print("ok portrait")
-            if sender.direction == .up {
-                swipeUpGridView()
+        if gridView.isGridComplete == true {
+            if phoneOrientation.isPortrait {
+                print("ok portrait")
+                if sender.direction == .up {
+                    swipeUpGridView()
+                }
+            }
+            else if phoneOrientation.isLandscape{
+                print("ok paysage")
+                if sender.direction == .left {
+                    swipeLeftGridView()
+                }
             }
         }
-        else if phoneOrientation.isLandscape{
-            print("ok paysage")
-            if sender.direction == .left {
-                swipeLeftGridView()
-            }
+        else {
+            print("la grid n'est pas complete")
         }
     }
     
@@ -138,11 +147,9 @@ class ViewController: UIViewController {
     private func swipeLeftGridView() {
         
         let screenWidth = UIScreen.main.bounds.width
-        
         var translationTransform: CGAffineTransform
         
         translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
-        print("vers le haut de \(translationTransform)")
         
         UIView.animate(withDuration: 0.8, animations: {
             self.gridView.transform = translationTransform
@@ -174,19 +181,18 @@ class ViewController: UIViewController {
     
     // return to initial position
     private func swipeBackGridView() {
+        
+        
         let gridViewHeight = gridView.bounds.height
         let gridViewWidth = gridView.bounds.width
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
         var translationTransformBack: CGAffineTransform
         
+        
         if phoneOrientation.isPortrait {
             
             translationTransformBack = CGAffineTransform(translationX: 0, y:  screenHeight/2 - gridViewHeight - 44)
-            
-            print(gridViewHeight)
-            print(screenHeight)
-            print(translationTransformBack)
             
             UIView.animate(withDuration: 0.8, animations: {
                 self.gridView.transform = translationTransformBack
@@ -200,10 +206,6 @@ class ViewController: UIViewController {
             
             translationTransformBack = CGAffineTransform(translationX: screenWidth/2 - gridViewWidth - 44, y: 0)
             
-            print(gridViewWidth)
-            print(screenWidth)
-            print(translationTransformBack)
-            
             UIView.animate(withDuration: 0.8, animations: {
                 self.gridView.transform = translationTransformBack
             }) { (succes) in
@@ -214,29 +216,10 @@ class ViewController: UIViewController {
         }
     }
     
-    
-   
-   
-    
-    /*
-    private func landscapeText() {
-        if UIDevice.current.orientation.isLandscape == true {
-            textToSwipe.text = "*********"
-        }
-    }*/
-    
-    
-    
-    
 }
 
 
-
-
-
-
 //  X-X-X-X-X-X-X-X-X-X  EXTENSIONS  X-X-X-X-X-X-X-X-X-X
-
 
 
 extension ViewController: GridViewDelegate {
