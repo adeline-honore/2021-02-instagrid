@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // at the launch of the application the starting grid is of the style .squaresOnly
+        // at the launch of thdrage application the starting grid is of the style .squaresOnly
         selectedButton = squaresOnlyButton
         selectedGrid(currentButton: selectedButton)
         
@@ -105,113 +105,99 @@ class ViewController: UIViewController {
     // to share gridView
     @IBAction func shareGridView(_ sender: UISwipeGestureRecognizer) {
         
-        if gridView.isGridComplete == true {
-            if phoneOrientation.isPortrait {
-                print("ok portrait")
-                if sender.direction == .up {
-                    swipeUpGridView()
-                }
-            }
-            else if phoneOrientation.isLandscape{
-                print("ok paysage")
-                if sender.direction == .left {
-                    swipeLeftGridView()
-                }
-            }
-        }
-        else {
+        guard gridView.isGridComplete else {
             print("la grid n'est pas complete")
+            return
         }
+        swipeGridView(sender)
     }
     
-    // to swipe UP gridView
-    private func swipeUpGridView() {
-        
-        let screenHeight = UIScreen.main.bounds.height
-        
-        var translationTransform: CGAffineTransform
-        
-        translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
-        print("vers le haut de \(translationTransform)")
-        
-        UIView.animate(withDuration: 0.8, animations: {
-            self.gridView.transform = translationTransform
-        }) { (succes) in
-            if succes {
-                self.shareGrid()
-            }
-        }
-    }
-    
-    // to swipe LEFT gridView
-    private func swipeLeftGridView() {
+    // to swipe gridView
+    private func swipeGridView(_ sender: UISwipeGestureRecognizer) {
         
         let screenWidth = UIScreen.main.bounds.width
-        var translationTransform: CGAffineTransform
+        let screenHeight = UIScreen.main.bounds.height
         
-        translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+        var translationTransform = CGAffineTransform()
+        print(phoneOrientation)
         
+        if phoneOrientation.isPortrait {
+            print("ok portrait")
+            if sender.direction == .up {
+                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+            }
+        }
+        else if phoneOrientation.isLandscape{
+            print("ok paysage")
+            if sender.direction == .left {
+                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+            }
+        }
+        print(translationTransform)
         UIView.animate(withDuration: 0.8, animations: {
             self.gridView.transform = translationTransform
         }) { (succes) in
             if succes {
-                self.shareGrid()
+                self.swipeBackGridView()
             }
         }
+        
+        
+        
+        /*
+        if phoneOrientation.isPortrait {
+            print("ok portrait")
+            if sender.direction == .up {
+                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+                UIView.animate(withDuration: 0.8, animations: {
+                    self.gridView.transform = translationTransform
+                }) { (succes) in
+                    if succes {
+                        self.swipeBackGridView()
+                    }
+                }
+            }
+        }
+        else if phoneOrientation.isLandscape{
+            print("ok paysage")
+            if sender.direction == .left {
+                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+                UIView.animate(withDuration: 0.8, animations: {
+                    self.gridView.transform = translationTransform
+                }) { (succes) in
+                    if succes {
+                        self.swipeBackGridView()
+                    }
+                }
+            }
+        }*/
+        
     }
+    
     
     // to share gridView
     private func shareGrid() {
         
-        /*
         // creation de l'image à partager
         let imageToShare = gridView.asImage()
-        
         
         // creation d'une instance de UIActivityViewController
         let activityViewController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
         
         activityViewController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         
-        present(activityViewController, animated: true)*/
-        
-        swipeBackGridView()
+        present(activityViewController, animated: true)
         
     }
     
     // return to initial position
     private func swipeBackGridView() {
         
-        
-        let gridViewHeight = gridView.bounds.height
-        let gridViewWidth = gridView.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
-        let screenWidth = UIScreen.main.bounds.width
-        var translationTransformBack: CGAffineTransform
-        
-        
-        if phoneOrientation.isPortrait {
-            
-            translationTransformBack = CGAffineTransform(translationX: 0, y:  screenHeight/2 - gridViewHeight - 44)
-            
-            UIView.animate(withDuration: 0.8, animations: {
-                self.gridView.transform = translationTransformBack
-            }) { (succes) in
-                if succes {
-                    print("ok")
-                }
-            }
-        }
-        else if phoneOrientation.isLandscape {
-            
-            translationTransformBack = CGAffineTransform(translationX: screenWidth/2 - gridViewWidth - 44, y: 0)
-            
-            UIView.animate(withDuration: 0.8, animations: {
-                self.gridView.transform = translationTransformBack
-            }) { (succes) in
-                if succes {
-                    print("ok")
-                }
+        UIView.animate(withDuration: 0.8, animations: {
+            self.gridView.transform = .identity
+        }) { (succes) in
+            if succes {
+                self.shareGrid()
             }
         }
     }
@@ -224,9 +210,7 @@ class ViewController: UIViewController {
 
 extension ViewController: GridViewDelegate {
     func didSelectButton(_ sender: UIButton!) {
-        
-        // Open ImagePicker etc.
-        
+                
         // creation d'une constante qui instancie UIImagePickerController
         let imagePickerController = UIImagePickerController()
         

@@ -38,9 +38,10 @@ class GridView: UIView {
     }
     
     
-    private var gridArray: [UIButton]!
     
     var isGridComplete: Bool {
+        
+        var gridArray = [UIButton]()
         
         switch gridType {
         case .squaresOnly:
