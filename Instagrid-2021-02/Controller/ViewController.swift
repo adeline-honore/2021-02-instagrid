@@ -85,7 +85,7 @@ class ViewController: UIViewController {
             gridView.gridType = .squaresOnly
         }
         selectedGrid(currentButton: sender)
-        
+        gridView.verifHideImage()
     }
     
     // display of the image "selected" on the buttons
@@ -105,11 +105,13 @@ class ViewController: UIViewController {
     // to share gridView
     @IBAction func shareGridView(_ sender: UISwipeGestureRecognizer) {
         
-        guard gridView.isGridComplete else {
+        if gridView.isGridComplete() == false {
             print("la grid n'est pas complete")
             return
         }
-        swipeGridView(sender)
+        else {
+            swipeGridView(sender)
+        }
     }
     
     // to swipe gridView
@@ -121,34 +123,25 @@ class ViewController: UIViewController {
         var translationTransform = CGAffineTransform()
         print(phoneOrientation)
         
-        if phoneOrientation.isPortrait {
-            print("ok portrait")
-            if sender.direction == .up {
-                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
-            }
-        }
-        else if phoneOrientation.isLandscape{
-            print("ok paysage")
-            if sender.direction == .left {
-                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
-            }
-        }
-        print(translationTransform)
-        UIView.animate(withDuration: 0.8, animations: {
-            self.gridView.transform = translationTransform
-        }) { (succes) in
-            if succes {
-                self.swipeBackGridView()
-            }
-        }
-        
-        
-        
         /*
+        guard phoneOrientation.isPortrait && sender.direction == .up else {
+            return
+        }
+        translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+        
+        
+        guard phoneOrientation.isLandscape && sender.direction == .left else {
+            return
+        }
+        translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+        */
+        
         if phoneOrientation.isPortrait {
             print("ok portrait")
             if sender.direction == .up {
+                
                 translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
+                print(translationTransform)
                 UIView.animate(withDuration: 0.8, animations: {
                     self.gridView.transform = translationTransform
                 }) { (succes) in
@@ -162,6 +155,7 @@ class ViewController: UIViewController {
             print("ok paysage")
             if sender.direction == .left {
                 translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
+                print(translationTransform)
                 UIView.animate(withDuration: 0.8, animations: {
                     self.gridView.transform = translationTransform
                 }) { (succes) in
@@ -170,8 +164,7 @@ class ViewController: UIViewController {
                     }
                 }
             }
-        }*/
-        
+        }
     }
     
     
@@ -236,9 +229,11 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         
         gridView.setTheImage(location: gridView.selectedLocation, image: choosenImage)
         picker.dismiss(animated: true, completion: nil)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
 }

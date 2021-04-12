@@ -37,12 +37,12 @@ class GridView: UIView {
         }
     }
     
+    private var gridArray = [UIButton]()
     
     
-    var isGridComplete: Bool {
-        
-        var gridArray = [UIButton]()
-        
+    //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
+    
+    func knowGridArray() {
         switch gridType {
         case .squaresOnly:
             gridArray = [topLeftButton, topRightButton, bottomLeftButton, bottomRightButton]
@@ -51,18 +51,25 @@ class GridView: UIView {
         case .squareSquareRect:
             gridArray = [topLeftButton, topRightButton, bottomLeftButton]
         }
-        
+    }
+    
+    
+    func isGridComplete() -> Bool{
         var result = true
+        knowGridArray()
         gridArray.forEach { buttonInGrid in
-            if buttonInGrid.currentImage.debugDescription.contains("Plus") {
-                result = false
+            var resultUnit = false
+            if buttonInGrid.currentBackgroundImage == nil {
+                resultUnit = false
             }
+            else {
+                resultUnit = true
+            }
+            result = result && resultUnit
         }
         return result
     }
     
-    
-    //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
     
     // to custom gridView
     private func setGridType(_ gridType: GridType) {
@@ -77,15 +84,44 @@ class GridView: UIView {
             topRightButton.isHidden = false
             bottomRightButton.isHidden = false
         }
+        
+        //topLeftButton.currentImage.contentMode = .scaleAspectFit
+        //bottomLeftButton.imageView?.contentMode = .scaleAspectFill
+        //bottomLeftButton.currentImage.contentMode = .scaleAspectFit
+        
+        //bottomLeftButton.currentBackgroundImage?.scale.native
+        
+        
+        
     }
     
     // to select location for choosenImage
     func setTheImage(location: UIButton?, image: UIImage) {
+        
         // choice of location
         selectedLocation = location
         
         // picture change
-        location?.setImage(image, for: .normal)
+        location?.setBackgroundImage(image, for: .normal)
+        
+        hideDefaultImage(location: selectedLocation)
+        
+    }
+    
+    func hideDefaultImage(location: UIButton?) {
+        location?.imageView?.alpha = 0
+    }
+    
+    func verifHideImage() {
+        print("-------------")
+        knowGridArray()
+        gridArray.forEach { buttonInGrid in
+            if buttonInGrid.currentBackgroundImage != nil {
+                hideDefaultImage(location: buttonInGrid)
+                print(1)
+            }
+        }
+        print("___________")
     }
     
     // to choose an image when a button is pressed
