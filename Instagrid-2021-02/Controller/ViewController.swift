@@ -9,36 +9,29 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //  XXXXXXXXXXXXXXXXXXXX  PROPERTIES  XXXXXXXXXXXXXXXXXXXX
-        
+    // MARK: -PROPERTIES
     @IBOutlet weak var gridView: GridView!
     
-    // StackView buttons
     @IBOutlet weak var rectSquareSquareButton: UIButton!
     @IBOutlet weak var squareSquareRectButton: UIButton!
     @IBOutlet weak var squaresOnlyButton: UIButton!
     
-    // current button in StackView to choose a grid
     var selectedButton: UIButton?
     
-    // phone orientation
     var phoneOrientation: UIDeviceOrientation {
         get {
             return UIDevice.current.orientation
         }
     }
     
-    // labels for swipe
     @IBOutlet weak var textToSwipe: UILabel!
     
     
-    //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
+    // MARK: -METHODS
     
-    // -----------  VIEWDIDLOAD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // at the launch of thdrage application the starting grid is of the style .squaresOnly
         selectedButton = squaresOnlyButton
         selectedGrid(currentButton: selectedButton)
         
@@ -85,7 +78,6 @@ class ViewController: UIViewController {
             gridView.gridType = .squaresOnly
         }
         selectedGrid(currentButton: sender)
-        gridView.verifHideImage()
     }
     
     // display of the image "selected" on the buttons
@@ -121,27 +113,11 @@ class ViewController: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         
         var translationTransform = CGAffineTransform()
-        print(phoneOrientation)
-        
-        /*
-        guard phoneOrientation.isPortrait && sender.direction == .up else {
-            return
-        }
-        translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
-        
-        
-        guard phoneOrientation.isLandscape && sender.direction == .left else {
-            return
-        }
-        translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
-        */
         
         if phoneOrientation.isPortrait {
-            print("ok portrait")
             if sender.direction == .up {
                 
                 translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
-                print(translationTransform)
                 UIView.animate(withDuration: 0.8, animations: {
                     self.gridView.transform = translationTransform
                 }) { (succes) in
@@ -152,10 +128,8 @@ class ViewController: UIViewController {
             }
         }
         else if phoneOrientation.isLandscape{
-            print("ok paysage")
             if sender.direction == .left {
                 translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
-                print(translationTransform)
                 UIView.animate(withDuration: 0.8, animations: {
                     self.gridView.transform = translationTransform
                 }) { (succes) in
@@ -171,10 +145,8 @@ class ViewController: UIViewController {
     // to share gridView
     private func shareGrid() {
         
-        // creation de l'image à partager
         let imageToShare = gridView.asImage()
         
-        // creation d'une instance de UIActivityViewController
         let activityViewController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
         
         activityViewController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
@@ -194,26 +166,21 @@ class ViewController: UIViewController {
             }
         }
     }
-    
 }
 
 
-//  X-X-X-X-X-X-X-X-X-X  EXTENSIONS  X-X-X-X-X-X-X-X-X-X
+//  MARK: -EXTENSIONS
 
 
 extension ViewController: GridViewDelegate {
     func didSelectButton(_ sender: UIButton!) {
                 
-        // creation d'une constante qui instancie UIImagePickerController
         let imagePickerController = UIImagePickerController()
         
-        // choix du type de source pour l'image
         imagePickerController.sourceType = .photoLibrary
         
-        // ViewController delegate to himself
         imagePickerController.delegate = self
         
-        // Present the UIImagePickerViewController
         present(imagePickerController, animated: true, completion: nil)
     }
 }
@@ -235,5 +202,4 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
-    
 }

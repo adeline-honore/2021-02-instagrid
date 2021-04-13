@@ -20,7 +20,7 @@ class GridView: UIView {
         case squaresOnly
     }
     
-    //  XXXXXXXXXXXXXXXXXXXX  PROPERTIES  XXXXXXXXXXXXXXXXXXXX
+    //  MARK: -PROPERTIES
     
     @IBOutlet private var topLeftButton: UIButton!
     @IBOutlet private var topRightButton: UIButton!
@@ -40,7 +40,7 @@ class GridView: UIView {
     private var gridArray = [UIButton]()
     
     
-    //  XXXXXXXXXXXXXXXXXXXX METHODS  XXXXXXXXXXXXXXXXXXXX
+    // MARK: _METHODS
     
     func knowGridArray() {
         switch gridType {
@@ -85,43 +85,24 @@ class GridView: UIView {
             bottomRightButton.isHidden = false
         }
         
-        //topLeftButton.currentImage.contentMode = .scaleAspectFit
-        //bottomLeftButton.imageView?.contentMode = .scaleAspectFill
-        //bottomLeftButton.currentImage.contentMode = .scaleAspectFit
-        
-        //bottomLeftButton.currentBackgroundImage?.scale.native
-        
-        
-        
     }
     
     // to select location for choosenImage
     func setTheImage(location: UIButton?, image: UIImage) {
         
-        // choice of location
         selectedLocation = location
         
-        // picture change
+        // background change
         location?.setBackgroundImage(image, for: .normal)
-        
+        location?.layoutIfNeeded()
+        location?.subviews.first?.contentMode = .scaleAspectFill
+       
         hideDefaultImage(location: selectedLocation)
-        
     }
     
     func hideDefaultImage(location: UIButton?) {
-        location?.imageView?.alpha = 0
-    }
-    
-    func verifHideImage() {
-        print("-------------")
-        knowGridArray()
-        gridArray.forEach { buttonInGrid in
-            if buttonInGrid.currentBackgroundImage != nil {
-                hideDefaultImage(location: buttonInGrid)
-                print(1)
-            }
-        }
-        print("___________")
+        location?.setImage(nil, for: .normal)
+        
     }
     
     // to choose an image when a button is pressed
@@ -131,8 +112,7 @@ class GridView: UIView {
     }
 }
 
-
-//  X-X-X-X-X-X-X-X-X-X  EXTENSIONS  X-X-X-X-X-X-X-X-X-X
+// MARK: -EXTENSIONS
 
 // to create an image from gridView
 extension GridView {
