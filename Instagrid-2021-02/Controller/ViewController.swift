@@ -9,33 +9,31 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    // MARK: -PROPERTIES
+    // MARK: - PROPERTIES
     @IBOutlet weak var gridView: GridView!
-    
     @IBOutlet weak var rectSquareSquareButton: UIButton!
     @IBOutlet weak var squareSquareRectButton: UIButton!
     @IBOutlet weak var squaresOnlyButton: UIButton!
+    @IBOutlet weak var textToSwipe: UILabel!
     
-    var selectedButton: UIButton?
+    private let duration: Double = 0.8
+        
+    private var selectedButton: UIButton?
     
-    var phoneOrientation: UIDeviceOrientation {
+    private var phoneOrientation: UIDeviceOrientation {
         get {
             return UIDevice.current.orientation
         }
     }
     
-    @IBOutlet weak var textToSwipe: UILabel!
-    
-    
-    // MARK: -METHODS
+    // MARK: - METHODS
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         selectedButton = squaresOnlyButton
         selectedGrid(currentButton: selectedButton)
-        
-        //
+    
         gridView.delegate = self
         
         // constant to swipe gridView
@@ -47,7 +45,6 @@ class ViewController: UIViewController {
         gridView.addGestureRecognizer(swipeLeft)
     }
     
-    // -----------  override VIEWWILLLAYOUTSUBVIEWS
     override func viewWillLayoutSubviews() {
         
         if phoneOrientation.isPortrait {
@@ -61,11 +58,11 @@ class ViewController: UIViewController {
     // ----------  METHODS : CHOICE OF A GRID TYPE
     
     // to choose the type of the grid
-    @IBAction func didSelectTypeOfGrid(_ sender: UIButton!) {
+    @IBAction func didSelectTypeOfGrid(_ sender: UIButton) {
         selectTypeOfGrid(sender)
     }
     
-    private func selectTypeOfGrid(_ sender: UIButton!) {
+    private func selectTypeOfGrid(_ sender: UIButton) {
         
         switch sender {
         case rectSquareSquareButton:
@@ -97,8 +94,7 @@ class ViewController: UIViewController {
     // to share gridView
     @IBAction func shareGridView(_ sender: UISwipeGestureRecognizer) {
         
-        if gridView.isGridComplete() == false {
-            print("la grid n'est pas complete")
+        if !gridView.isGridComplete() {
             return
         }
         else {
@@ -112,30 +108,30 @@ class ViewController: UIViewController {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
         
+        var translationX: CGFloat = 0
+        var translationY: CGFloat = 0
         var translationTransform = CGAffineTransform()
-        
+                
         if phoneOrientation.isPortrait {
             if sender.direction == .up {
-                
-                translationTransform = CGAffineTransform(translationX: 0, y: -screenHeight)
-                UIView.animate(withDuration: 0.8, animations: {
-                    self.gridView.transform = translationTransform
-                }) { (succes) in
-                    if succes {
-                        self.swipeBackGridView()
-                    }
-                }
+                translationX = 0
+                translationY = -screenHeight
             }
         }
-        else if phoneOrientation.isLandscape{
+        else if phoneOrientation.isLandscape {
             if sender.direction == .left {
-                translationTransform = CGAffineTransform(translationX: -screenWidth, y: 0)
-                UIView.animate(withDuration: 0.8, animations: {
-                    self.gridView.transform = translationTransform
-                }) { (succes) in
-                    if succes {
-                        self.swipeBackGridView()
-                    }
+                translationX = -screenWidth
+                translationY = 0
+            }
+        }
+        
+        if (phoneOrientation.isPortrait && sender.direction == .up) || (phoneOrientation.isLandscape && sender.direction == .left) {
+            translationTransform = CGAffineTransform(translationX: translationX, y: translationY)
+            UIView.animate(withDuration: duration, animations: { [weak self] in
+                self?.gridView.transform = translationTransform
+            }) { [weak self] success in
+                if success {
+                    self?.shareGrid()
                 }
             }
         }
@@ -145,26 +141,31 @@ class ViewController: UIViewController {
     // to share gridView
     private func shareGrid() {
         
+        // creation de l'image à partager
         let imageToShare = gridView.asImage()
-        
+           
+        // creation d'une instance de UIActivityViewController
         let activityViewController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: [])
+        activityViewController.completionWithItemsHandler = { [weak self] (_,_,_,_) in
+            self?.swipeBackGridView()
+            
+        }
         
-        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
+        if activityViewController.popoverPresentationController != nil {
+            popoverPresentationController?.sourceView = self.view
+            popoverPresentationController?.sourceRect = self.view.bounds
+        }
         
         present(activityViewController, animated: true)
-        
     }
     
+   
     // return to initial position
     private func swipeBackGridView() {
         
-        UIView.animate(withDuration: 0.8, animations: {
+        UIView.animate(withDuration: duration, animations: {
             self.gridView.transform = .identity
-        }) { (succes) in
-            if succes {
-                self.shareGrid()
-            }
-        }
+        })
     }
 }
 
@@ -173,7 +174,7 @@ class ViewController: UIViewController {
 
 
 extension ViewController: GridViewDelegate {
-    func didSelectButton(_ sender: UIButton!) {
+    func didSelectButton(_ sender: UIButton) {
                 
         let imagePickerController = UIImagePickerController()
         
@@ -203,3 +204,4 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         picker.dismiss(animated: true, completion: nil)
     }
 }
+

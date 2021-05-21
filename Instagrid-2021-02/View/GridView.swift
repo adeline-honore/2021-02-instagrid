@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GridViewDelegate {
-    func didSelectButton(_ sender: UIButton!)
+    func didSelectButton(_ sender: UIButton)
 }
 
 class GridView: UIView {
@@ -20,13 +20,14 @@ class GridView: UIView {
         case squaresOnly
     }
     
-    //  MARK: -PROPERTIES
+    //  MARK: - PROPERTIES
     
     @IBOutlet private var topLeftButton: UIButton!
     @IBOutlet private var topRightButton: UIButton!
     @IBOutlet private var bottomLeftButton: UIButton!
     @IBOutlet private var bottomRightButton: UIButton!
    
+    
     var delegate: GridViewDelegate?
     
     var selectedLocation: UIButton!
@@ -40,9 +41,9 @@ class GridView: UIView {
     private var gridArray = [UIButton]()
     
     
-    // MARK: _METHODS
+    // MARK: - METHODS
     
-    func knowGridArray() {
+    private func knowGridArray() {
         switch gridType {
         case .squaresOnly:
             gridArray = [topLeftButton, topRightButton, bottomLeftButton, bottomRightButton]
@@ -84,8 +85,8 @@ class GridView: UIView {
             topRightButton.isHidden = false
             bottomRightButton.isHidden = false
         }
-        
     }
+    
     
     // to select location for choosenImage
     func setTheImage(location: UIButton?, image: UIImage) {
@@ -100,27 +101,13 @@ class GridView: UIView {
         hideDefaultImage(location: selectedLocation)
     }
     
-    func hideDefaultImage(location: UIButton?) {
+    private func hideDefaultImage(location: UIButton?) {
         location?.setImage(nil, for: .normal)
-        
     }
     
     // to choose an image when a button is pressed
-    @IBAction func didTapChooseImage(_ sender: UIButton!) {
+    @IBAction func didTapChooseImage(_ sender: UIButton) {
         selectedLocation = sender
         delegate?.didSelectButton(sender)
-    }
-}
-
-// MARK: -EXTENSIONS
-
-// to create an image from gridView
-extension GridView {
-    
-    func asImage() -> UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
-        }
     }
 }
