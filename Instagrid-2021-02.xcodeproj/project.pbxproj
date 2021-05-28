@@ -13,8 +13,6 @@
 		6E1597D925DDD53E0005CB56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E1597D725DDD53E0005CB56 /* Main.storyboard */; };
 		6E1597DB25DDD5430005CB56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E1597DA25DDD5430005CB56 /* Assets.xcassets */; };
 		6E1597DE25DDD5430005CB56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E1597DC25DDD5430005CB56 /* LaunchScreen.storyboard */; };
-		6E1597ED25DDDA880005CB56 /* Delm-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6E1597EC25DDDA880005CB56 /* Delm-Medium.otf */; };
-		6E1597F025DDDA9E0005CB56 /* ThirstySoftRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6E1597EF25DDDA9E0005CB56 /* ThirstySoftRegular.otf */; };
 		6E414A8C25FA1480006561BF /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E414A8B25FA1480006561BF /* GridView.swift */; };
 		6ED689EB262EE7D400B53F1E /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED689EA262EE7D400B53F1E /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -27,10 +25,10 @@
 		6E1597D825DDD53E0005CB56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6E1597DA25DDD5430005CB56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E1597DD25DDD5430005CB56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		6E1597DF25DDD5430005CB56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6E1597EC25DDDA880005CB56 /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Delm-Medium.otf"; path = "../../../../open-classroom/IOS/p4/insta/Delm-Medium.otf"; sourceTree = "<group>"; };
-		6E1597EF25DDDA9E0005CB56 /* ThirstySoftRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ThirstySoftRegular.otf; path = "../../../../open-classroom/IOS/p4/insta/ThirstySoftRegular.otf"; sourceTree = "<group>"; };
 		6E414A8B25FA1480006561BF /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		6E9D4EC8266164EC00C8F912 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
+		6E9D4ECC2661661000C8F912 /* Delm-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Delm-Medium.otf"; sourceTree = "<group>"; };
+		6E9D4ECD2661661700C8F912 /* ThirstySoftRegular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ThirstySoftRegular.otf; sourceTree = "<group>"; };
 		6ED689EA262EE7D400B53F1E /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,12 +74,12 @@
 		6E1597E625DDD54F0005CB56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6E1597DF25DDD5430005CB56 /* Info.plist */,
+				6E9D4EC9266164EC00C8F912 /* Info.plist */,
 				6E1597D125DDD53E0005CB56 /* AppDelegate.swift */,
 				6E1597DA25DDD5430005CB56 /* Assets.xcassets */,
+				6E9D4ECD2661661700C8F912 /* ThirstySoftRegular.otf */,
+				6E9D4ECC2661661000C8F912 /* Delm-Medium.otf */,
 				6E1597DC25DDD5430005CB56 /* LaunchScreen.storyboard */,
-				6E1597EC25DDDA880005CB56 /* Delm-Medium.otf */,
-				6E1597EF25DDDA9E0005CB56 /* ThirstySoftRegular.otf */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -170,8 +168,6 @@
 			files = (
 				6E1597DE25DDD5430005CB56 /* LaunchScreen.storyboard in Resources */,
 				6E1597DB25DDD5430005CB56 /* Assets.xcassets in Resources */,
-				6E1597F025DDDA9E0005CB56 /* ThirstySoftRegular.otf in Resources */,
-				6E1597ED25DDDA880005CB56 /* Delm-Medium.otf in Resources */,
 				6E1597D925DDD53E0005CB56 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +204,14 @@
 				6E1597DD25DDD5430005CB56 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		6E9D4EC9266164EC00C8F912 /* Info.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6E9D4EC8266164EC00C8F912 /* Base */,
+			);
+			name = Info.plist;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
